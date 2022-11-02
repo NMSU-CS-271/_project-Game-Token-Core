@@ -238,5 +238,49 @@ game_loop.cpp
 The main game application handles reading files passed in as arguments and constructing all relevant objects. You'll need to modify it to use your subclasses of the various classes (it will not compile by default). You'll need to identify where in `main()` you need to change the code. You should not (and should not need to) alter `State_runner`. Running the application expects up to three command-line parameters, in this order:
 
 1. A string for the parameters filename (there is one supplied as `default.set`). The parameters file should contain three integers, the first is the starting / maximum hit points for the token; the second is the starting / maximum power points for the token; the third is the number of turns in the game. 
-2. A string for the map filename. The file should be formatted as in the constructor documentation for `Board`.
-3. A string for the command filename, which can be used for a `Driver_scripted` if needed. The file should be formatted as specified in the `Driver_scripted` documentation. 
+2. A string for the map filename. The file should be formatted as in the constructor documentation for `Board`. Two sample boards are provided: `simple.map` and `danger.map`. 
+3. A string for the command filename, which can be used for a `Driver_scripted` if needed. The file should be formatted as specified in the `Driver_scripted` documentation. Two sample commands are provided that can go with the `danger.map` -- `dodge_danger.cmd` (which will drive the token around the dangerous parts of the map) and `crash_danger.cmd` (which will run the token through the dangerous parts of the map). 
+
+## What To Do
+
+In this assignment, you'll need to implement one class and design and implement two others. You'll implement, according to the specification below, a subclass of `Token_base` -- `Token` -- that is very simple. Then you'll design and implement a subclass of your `Token` -- `Token_special` that has some kind of special movement rules. Finally, you'll design and implement a subclass of `Driver_base` (or `Driver_scripted` -- your choice) that is used to move your `Token_special` based on the map. There is no grading on the performance of your tokens! Just make sure you design and implement the required things. 
+
+Start by designing, sans code, your classes, then develop implementations. Details on each of the three classes are below.
+
+Once you have started working on them, you can test them through the `main()` in `game_loop.cpp` (or build your own test harnesses). You'll have to make some edits to it to make sure that it's using your classes and you can change the parameters, maps, and/or scripts to suit your needs. Note that once you get started, you'll also need to update the included `Makefile` to account for compiling your source code. 
+
+### A Plain Token: `Token` class
+
+This is a basic token, with no special abilities. It can only move one space at a time. This class should subclass `Token_base` and be constructable with a number of hit points and a number of power points. It should take in a reference to a `Board` object, which will supply the starting X and Y position of the `Token`. `Token` needs to override and implement the pure virtual functions from `Token_base`: `move(direction)`, `move_special(vector<direction>)`, and `apply_terrain_effect(terrain_type)`. 
+
+The specifications for `move()` and `apply_terrain_effect()` are provided in `Token_base`. For `move_special()`, which takes a `vector` of `direction`'s, a `Token` should just call its `move()` function with the first element of the `vector`.
+
+#### Files:
+````
+Game_token.h
+Game_token.cpp
+````
+
+### A Special Token: `Token_special` class
+
+The `Token_special` should extend `Token` and it should be an implementation of YOUR design for a special token -- a token that has a special ability. It should be the same as the `Token` in most ways, but it should have a special move! How you design the move is up to you. When you build your `Token_special`, develop an implementation of `move_special(vector<direction>)`; if you want your special token to look different from a default token, you can also develop your own implementation of `make_shape()`.  
+
+Note that using the special move costs power points, so your token won't be able to use it every turn. What you do with the special move is up to you. Note that it takes in a `vector<direction>` rather than a single direction. Why it does this is also up to you (the main reason it was provided was in case you wanted to offer the ability to move diagonally, but you could use it for other reasons as well). Note that `move_special()` must still adhere to the invariant that the token is somewhere in the bounds of the board and NOT entering a barrier space! Document what your special token does and why. 
+
+#### Files:
+````
+Game_token_special.h
+Game_token_special.cpp
+````
+
+### A Special Token Driver: `Driver_special` class
+
+The `Driver_special` is a driver to issue commands to your `Token_special` to get it through the game board; it should be designed with this in mind. The special driver will be called each game turn automatically by invoking `next_move()`. The driver gets created with a reference to the board object and the token object -- thus `next_move()` can scan spaces on the board near to the token to make decisions about how to move. 
+
+#### Files:
+````
+Driver_special.h
+Driver_special.cpp
+````
+
+
