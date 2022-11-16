@@ -242,7 +242,7 @@ For whichever version you want to test with, you'll need to modify it to use you
 
 1. A string for the parameters filename (there is one supplied as `default.set`). The parameters file should contain three integers, the first is the starting / maximum hit points for the token; the second is the starting / maximum power points for the token; the third is the number of turns in the game. 
 2. A string for the map filename. The file should be formatted as in the constructor documentation for `Board`. Two sample boards are provided: `simple.map` and `danger.map`. 
-3. A string for the command filename, which can be used for a `Driver_scripted` if needed. The file should be formatted as specified in the `Driver_scripted` documentation. Two sample commands are provided that can go with the `danger.map` -- `dodge_danger.cmd` (which will drive the token around the dangerous parts of the map) and `crash_danger.cmd` (which will run the token through the dangerous parts of the map). 
+3. A string for the command filename, which can be used for a `Driver_scripted` if needed. The file should be formatted as specified in the `Driver_scripted` documentation. Several sample command files are provided that can go with the `danger.map`; they all end with `.cmd`. 
 
 ## What To Do
 
