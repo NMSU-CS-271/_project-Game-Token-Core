@@ -2,12 +2,8 @@
 #define GAME_TOKEN_BASE_H
 
 #include <vector>
-#include "GUI/Graph.h"
-#include "Complex_circle.h"
 #include "Board_space.h"
 #include "Board.h"
-
-using namespace Graph_lib;
 
 namespace Grid_game
 {
@@ -22,7 +18,7 @@ namespace Grid_game
     class Token_base
     {
     public:
-        Token_base(int start_x, int start_y, int start_hp, int start_pp, const Board &the_board) : x(start_x), y(start_y), hp(start_hp), pp(start_pp), max_hp(start_hp), max_pp(start_pp), board(the_board), token_shape(nullptr)
+        Token_base(int start_x, int start_y, int start_hp, int start_pp, const Board &the_board) : x(start_x), y(start_y), hp(start_hp), pp(start_pp), max_hp(start_hp), max_pp(start_pp), board(the_board)
         {
         }
 
@@ -61,41 +57,15 @@ namespace Grid_game
         const int max_power_points() const { return max_pp; }
         const int x_pos() const { return x; }
         const int y_pos() const { return y; }
-        Shape* shape()
-        {
-            if (!token_shape)
-            { // token shape doesn't exist yet, so construct it
-                token_shape = make_shape();
-            }
-
-            return token_shape;
-        }
-
-        ~Token_base()
-        {
-            delete token_shape;
-        }
 
     protected:
         int x, y;
         int hp, pp, max_hp, max_pp;
         const Board &board;
-        Shape *token_shape;
 
         virtual void move(direction) = 0;
         virtual void move_special(vector<direction>) = 0;
         virtual void apply_terrain_effect(const Space::terrain_type) = 0;
-
-        virtual Shape* make_shape()
-        {
-//            cout << "Token_base::make_shape()" << endl;
-            // doesn't exist, so construct it
-            Shape *the_shape = new Graph_lib::Complex_circle{Point(0, 0), 5};
-            the_shape->set_color(Graph_lib::Color::cyan);
-            the_shape->set_fill_color(Graph_lib::Color::cyan);
-
-            return the_shape;
-        };
     };
 }
 

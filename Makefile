@@ -6,7 +6,7 @@ VPATH = GUI
 
 game_loop: Complex_circle.o Window_game.o Driver_scripted.o Game_state.o Board.o Board_space.o Graph.o GUI.o Window.o
 
-game_loop_headless: Complex_circle.o Window_game.o Driver_scripted.o Game_state.o Board.o Board_space.o Graph.o GUI.o Window.o
+game_loop_headless: Driver_scripted.o Game_state.o Board.o Board_space.o
 
 clean:
 	rm -f *.o

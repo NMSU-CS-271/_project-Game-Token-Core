@@ -4,6 +4,15 @@ namespace Grid_game
 {
     using namespace Graph_lib;
 
+    Shape* Window_game::shape()
+    {
+        Shape *the_shape = new Graph_lib::Complex_circle{Point(0, 0), 5};
+        the_shape->set_color(Graph_lib::Color::magenta);
+        the_shape->set_fill_color(Graph_lib::Color::magenta);
+
+        return the_shape;
+    }
+
     void Window_game::init()
     {
         cout << "starting init()" << endl;

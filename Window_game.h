@@ -7,6 +7,7 @@
 #include "Board_space.h"
 #include "Game_token_base.h"
 #include "GUI/Graph.h"
+#include "Complex_circle.h"
 #include <string>
 
 namespace Grid_game
@@ -21,7 +22,7 @@ namespace Grid_game
             state(in_state),
             board(in_board), 
             token(in_token), 
-            token_viz(in_token.shape())
+            token_viz(shape())
             {
                 play_state = new Graph_lib::Text{Graph_lib::Point{0+status_band_padding,status_band_baseline},"INIT"};
                 
@@ -53,10 +54,12 @@ namespace Grid_game
                 delete hp_state;
                 delete pp_state;
                 delete turn_state;
+                delete token_viz;
             }
 
         protected:
             void draw() override;
+            Shape* shape();
 
             const Game_state& state;
             const Board& board;

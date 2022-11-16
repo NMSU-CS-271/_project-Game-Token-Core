@@ -1,10 +1,7 @@
 #include "Game_state.h"
 #include "Game_token.h"
-#include "Window_game.h"
 #include "Driver_scripted.h"
 #include <string>
-#include <chrono>
-#include <thread>
 #include <iostream>
 
 int main(int argc, char *argv[])
