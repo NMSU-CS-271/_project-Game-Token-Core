@@ -228,14 +228,17 @@ Window_game.cpp
 
 Constructs a new game window. Takes references to the game state, the board, and the token, as well as the width and height of the window (in pixels) and a string to display in the titlebar of the window. 
 
-### Main Game Application
+### Main Game Applications
 
-#### File:
+#### Files:
 ````
 game_loop.cpp
+game_loop_headless.cpp
 ````
 
-The main game application handles reading files passed in as arguments and constructing all relevant objects. You'll need to modify it to use your subclasses of the various classes (it will not compile by default). You'll need to identify where in `main()` you need to change the code. You should not (and should not need to) alter `State_runner`. Running the application expects up to three command-line parameters, in this order:
+The main game applications handle reading files passed in as arguments and constructing all relevant objects. There are two versions: `game_loop.cpp` and `game_loop_headless.cpp`. The former is graphical and uses X11 to show the game and run one step every second. The latter is text-only; you won't see anything happen, just the console and the game will play out as fast as the processor can run it. 
+
+For whichever version you want to test with, you'll need to modify it to use your subclasses of the various classes (it will not compile by default, nor will the included `Makefile` sucessfully link it). You'll need to identify where in `main()` you need to change the code. You should not (and should not need to) alter `State_runner`. Running the application expects up to three command-line parameters, in this order:
 
 1. A string for the parameters filename (there is one supplied as `default.set`). The parameters file should contain three integers, the first is the starting / maximum hit points for the token; the second is the starting / maximum power points for the token; the third is the number of turns in the game. 
 2. A string for the map filename. The file should be formatted as in the constructor documentation for `Board`. Two sample boards are provided: `simple.map` and `danger.map`. 
@@ -247,7 +250,7 @@ In this assignment, you'll need to implement one class and design and implement 
 
 Start by designing, sans code, your classes, then develop implementations. Details on each of the three classes are below.
 
-Once you have started working on them, you can test them through the `main()` in `game_loop.cpp` (or build your own test harnesses). You'll have to make some edits to it to make sure that it's using your classes and you can change the parameters, maps, and/or scripts to suit your needs. Note that once you get started, you'll also need to update the included `Makefile` to account for compiling your source code. 
+Once you have started working on them, you can test them through the `main()` in `game_loop.cpp` (or build your own test harnesses). You'll have to make some edits to it to make sure that it's using your classes and you can change the parameters, maps, and/or scripts to suit your needs. Note that once you get started, you'll also need to update the included `Makefile` to account for compiling your source code. In particular, you'll likely need to add dependencies that account for your new tokens and driver. 
 
 ### A Plain Token: `Token` class
 

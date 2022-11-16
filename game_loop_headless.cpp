@@ -7,38 +7,8 @@
 #include <thread>
 #include <iostream>
 
-// void callback(void*);
-
-struct State_runner
-{
-    State_runner(Grid_game::Game_state &in_state, Grid_game::Window_game *in_viz, int in_interval) : state(in_state), viz(in_viz), interval(in_interval) {}
-
-    void operator()()
-    {
-        while (state.active())
-        {
-            auto x = std::chrono::steady_clock::now() + std::chrono::milliseconds(interval);
-
-            state.run_game_loop_step();
-
-            std::cout << "draw frame" << endl;
-            viz->draw_frame();
-
-            std::cout << "sleeping!" << endl;
-
-            std::this_thread::sleep_until(x);
-        }
-    }
-
-    Grid_game::Game_state &state;
-    Grid_game::Window_game *viz;
-    int interval;
-};
-
 int main(int argc, char *argv[])
 {
-    XInitThreads();
-
     // first argument is game settings
     // second argument is map
     // third argument is scripted driver commands
@@ -82,14 +52,9 @@ int main(int argc, char *argv[])
     Grid_game::Driver_scripted driver{board, token, cmd_filename};
 
     Grid_game::Game_state state{board, token, driver, max_rounds};
-
-    Grid_game::Window_game *viz = new Grid_game::Window_game(state, board, token, 600, 700, "Snapdragoness' Game");
-
-    viz->init();
     
-    State_runner runner{state, viz, 1000};
-
-    std::thread t{runner};
-
-    return Fl::run();
+    while (state.active())
+    {
+        state.run_game_loop_step();
+    }
 }

@@ -32,13 +32,13 @@ namespace Grid_game
 
         void step_normal(direction dir)
         {
-            cout << "Game_token_base::step_normal" << endl;
+//            cout << "Game_token_base::step_normal" << endl;
             if (pp < max_pp)
                 ++pp;
             move(dir);
-            cout << "Game_token_base::step_normal -- apply terrain" << endl;
+//            cout << "Game_token_base::step_normal -- apply terrain" << endl;
             apply_terrain_effect(board.retrieve_space(x, y).type());
-            cout << "Game_token_base::step_normal finished" << endl;
+//            cout << "Game_token_base::step_normal finished" << endl;
         }
 
         void step_special(vector<direction> dirs)
@@ -88,7 +88,7 @@ namespace Grid_game
 
         virtual Shape* make_shape()
         {
-            cout << "Token_base::make_shape()" << endl;
+//            cout << "Token_base::make_shape()" << endl;
             // doesn't exist, so construct it
             Shape *the_shape = new Graph_lib::Complex_circle{Point(0, 0), 5};
             the_shape->set_color(Graph_lib::Color::cyan);

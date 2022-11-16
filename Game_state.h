@@ -27,7 +27,7 @@ namespace Grid_game
             {
                 game_mode gm = check_termination_condition();
 
-                cout << "active? " << !(gm == game_won || gm == game_lost) << endl;
+//                cout << "active? " << !(gm == game_won || gm == game_lost) << endl;
 
                 return !(gm == game_won || gm == game_lost);
             }
