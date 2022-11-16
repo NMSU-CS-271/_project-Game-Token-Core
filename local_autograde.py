@@ -6,6 +6,7 @@
 # v1.1 - 2022-09-22 - change tests to feed both cout and cerr to the same output so that 
 # v1.2 - 2022-09-23 - Correct incorrect path bug when attempting to fix malformed scripts. Scripts were getting incorrectly corrected in the original code, rather than the autograder copy.
 #  cerr is also captured and can be tested
+# v1.3 - 2022-11-15 - Correctly handle case where output partially matches at first and then later does actually match.
 
 import json
 import os
@@ -187,10 +188,11 @@ with open(AUTOGRADER_FILE) as json_file:
                                         else: # we have another line to try to match, check it
                                             if (expectedLine in outputLine): # match! great! keep going...
                                                 linesMatched += 1
-                                            else: # no match, we lost.
-                                                failedTestList.append(testBaseName)
-                                                print("FAILED.")
-                                                matching = False
+                                            else: # no match, we lost this time... reset to keep looking
+                                                linesMatched = 0
+                                                expectedOutputFile.seek(0)
+                                                expectedLine = expectedOutputFile.readline()
+                                                linesToMatch = 1
                                                 break      
                                 else: # haven't found it yet, keep looking through the output
                                     outputLine = outputFile.readline()
