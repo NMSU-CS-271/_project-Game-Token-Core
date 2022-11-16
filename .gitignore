@@ -1,3 +1,7 @@
+# Autograder directories
+.autograde_code/
+.autograde_test/
+
 # Prerequisites
 *.d
 
