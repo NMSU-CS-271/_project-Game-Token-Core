@@ -163,7 +163,7 @@ with open(AUTOGRADER_FILE) as json_file:
                                 failedTestList.append(testBaseName)
                                 print("FAILED!")
                 else:
-                    print("Test is in INLCUDES MODE")
+                    print("Test is in INCLUDES MODE")
 
                     with open(outputFilePath,"r") as outputFile:
                         with open(expectedOutputFilePath, "r") as expectedOutputFile:
